@@ -37,6 +37,12 @@ module "kubeflow" {
 
 See the full configuration options below.
 
+### Instructions
+
+Kubeflow is big, so it can take some time to start. Once it does connect to the istio ingress gateway service.
+
+Once you see the login screen, the username is `admin@kubeflow.org` and the password is `12341234`.
+
 ## Requirements
 
 | Name | Version |
