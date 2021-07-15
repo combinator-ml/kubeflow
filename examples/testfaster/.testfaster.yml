@@ -16,7 +16,7 @@ base:
     set -euo pipefail
     git clone https://github.com/combinator-ml/terraform-k8s-kubeflow repo
     cd repo
-    git checkout 8d932bb4fc3528df31c65bb481800182295429c9
+    git checkout 5f7636f979b2975613310202d452b94df6752590
     cd examples/testfaster
     terraform init
     KUBE_CONFIG_PATH=~/.kube/config terraform apply -auto-approve
