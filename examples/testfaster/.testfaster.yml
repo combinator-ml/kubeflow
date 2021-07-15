@@ -39,4 +39,8 @@ launch:
       port: 31380
   homepage: |
     ## Instructions
-    Click the buttons to launch the UIs.
+    Click the button to launch the Kubeflow UI.
+
+    Kubeflow is big, so it can take some time to start. If it 404's, wait for a while, then refresh.
+
+    Once you see the login screen, the username is admin@kubeflow.org and the password is 12341234
