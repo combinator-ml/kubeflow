@@ -1,3 +1,3 @@
-module "combinator-module" {
+module "kubeflow" {
   source = "../../"
 }
