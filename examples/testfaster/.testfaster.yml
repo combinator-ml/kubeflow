@@ -1,0 +1,43 @@
+name: Kubeflow - Combinator Component
+base:
+  kernel_image: quay.io/testfaster/ignite-kernel
+  os_dockerfile: |-
+    # This dockerfile defines the base disk image for your VMs
+    FROM quay.io/testfaster/kube-ubuntu
+    ENV bump-cache 1
+    RUN apt update
+    RUN apt install gnupg2 software-properties-common rsync -y
+    RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
+    RUN apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+    RUN apt install terraform -y
+  preload_docker_images: []
+  prewarm_script: |-
+    #!/bin/bash
+    set -euo pipefail
+    git clone https://github.com/combinator-ml/terraform-k8s-kubeflow repo
+    cd repo
+    git checkout 8d932bb4fc3528df31c65bb481800182295429c9
+    cd examples/testfaster
+    terraform init
+    KUBE_CONFIG_PATH=~/.kube/config terraform apply -auto-approve
+
+  kubernetes_version: v1.17.11
+
+runtime:
+  cpus: 4
+  memory: 8GB
+  disk: 10GB
+prewarm_pool_size: 4
+max_pool_size: 16
+default_lease_timeout: "1h"
+pool_sleep_timeout: "1w"
+shared: true
+
+launch:
+  title: MLFlow
+  buttons:
+    - title: Kubeflow
+      port: 31380
+  homepage: |
+    ## Instructions
+    Click the buttons to launch the UIs.
