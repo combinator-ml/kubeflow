@@ -64,12 +64,6 @@ module "kubeflow" {
 
 ```hcl
 module "kubeflow" {
-  providers = {
-    kubernetes = kubernetes
-    k8s        = k8s
-    helm       = helm
-  }
-
   source  = "datarootsio/kubeflow/module"
   version = "~>0.13"
 

@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 0.13"
+  required_version = ">= 0.13"
   required_providers {
     helm = {
       source = "hashicorp/helm"
@@ -8,26 +8,13 @@ terraform {
       source = "hashicorp/kubernetes"
     }
     k8s = {
-      source  = "banzaicloud/k8s"
-      version = "0.8.2"
+      source = "banzaicloud/k8s"
     }
   }
 }
 
-// TODO: be passed these providers, rather than defining them as empty...
-
-provider "k8s" {}
-
-provider "helm" {}
-
-provider "kubernetes" {}
-
 module "auth" {
-  depends_on = [module.istio, k8s_manifest.kubeflow_application_crd]
-  providers = {
-    kubernetes = kubernetes
-    k8s        = k8s
-  }
+  depends_on         = [module.istio, k8s_manifest.kubeflow_application_crd]
   source             = "./auth"
   application_secret = var.oidc_client_secret
   client_id          = var.oidc_client_id
@@ -40,13 +27,8 @@ module "auth" {
 }
 
 module "istio" {
-  depends_on = [helm_release.cert_manager]
-  count      = var.install_istio ? 1 : 0
-  providers = {
-    kubernetes = kubernetes
-    k8s        = k8s
-    helm       = helm
-  }
+  depends_on                  = [helm_release.cert_manager]
+  count                       = var.install_istio ? 1 : 0
   source                      = "./istio"
   domain_name                 = var.domain_name
   ingress_gateway_annotations = var.ingress_gateway_annotations
