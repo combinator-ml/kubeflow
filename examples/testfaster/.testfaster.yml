@@ -8,14 +8,14 @@ base:
     RUN apt install gnupg2 software-properties-common rsync -y
     RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
     RUN apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-    RUN apt install terraform=0.15.0 -y
+    RUN apt install terraform=1.0.2 -y
   preload_docker_images: []
   prewarm_script: |-
     #!/bin/bash
     set -euo pipefail
     git clone https://github.com/combinator-ml/terraform-k8s-kubeflow repo
     cd repo
-    git checkout 5f7636f979b2975613310202d452b94df6752590
+    git checkout 90b997efe87f6031fddc13b24561b5323b1ada70
     cd examples/testfaster
     terraform init
     KUBE_CONFIG_PATH=~/.kube/config terraform apply -auto-approve
